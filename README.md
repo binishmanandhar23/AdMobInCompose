@@ -26,14 +26,13 @@ Maven
 
 or if you want to further customize the module, simply import it.
 
-## Note
+# Note
 If there are any confusions just clone github repository for proper use cases & to get the example app shown in the gifs below.
 
 
-##Initialization:
+## Initialization:
 It is important that you follow the AdMob's [Get Started documentation](https://developers.google.com/admob/android/quick-start) for proper configuration of Mobile Ads SDK
 On further note, To keep versions consistent of libraries with the main application you'll need to add versions in the build.gradle(.) [Project level]
-#Example
 ```groovy
 buildscript {
     ext {
@@ -45,5 +44,6 @@ buildscript {
     //...Othercodes
 }
 ```
+
 
 
