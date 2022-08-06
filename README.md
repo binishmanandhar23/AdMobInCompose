@@ -102,7 +102,7 @@ Calling `show()` is enough for showing the full interstitial ad.
 **NOTE:** Google limits the number of Interstitial ads that can be shown.
 
 **Image**
-![](https://i.imgur.com/1Su92Bh.mp4)
+![](https://i.imgur.com/jiJ3Pea.gif)
 
 ## Native Ads
 
