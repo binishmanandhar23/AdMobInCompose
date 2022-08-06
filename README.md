@@ -64,7 +64,45 @@ BannerAds(
     modifier = Modifier,
     adUnit = "ca-app-pub-3940256099942544/6300978111",
     adSize = AdSize.BANNER,
-    adListener = listener
+    adListener = object : AdListener() {
+        override fun onAdLoaded() {
+            //Success
+        }
+
+        override fun onAdFailedToLoad(p0: LoadAdError) {
+            //Failure
+        }
+    }
 )
 ```
+
+## Interstitial Ads
+
+```kotlin
+val rememberInterstitialAdState =
+    rememberInterstitialAdsState(
+        adUnit = "ca-app-pub-3940256099942544/1033173712",
+        onAdLoaded = {
+            //Ad loaded
+        }, onAdLoadFailed = { loadAdError ->
+            //Error loading
+        }, fullScreenContentCallback = object : FullScreenContentCallback() {
+            //Add callbacks
+            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                
+            }
+        })
+//.....Other codes
+rememberInterstitialAdState?.show() // For showing the interstitial ad
+```
+Calling `show()` is enough for showing the full interstitial ad. 
+**NOTE:** Google limits the number of Interstitial ads that can be shown. 
+
+
+## Contributions
+
+If you want to contribute or just wanna say Hi!, you can find me at:
+1. [LinkedIn](https://www.linkedin.com/in/binish-manandhar-3136621b2/)
+2. [Facebook](https://www.facebook.com/binish.manandhar)
+3. [Twitter](https://twitter.com/NotBinish)
 
