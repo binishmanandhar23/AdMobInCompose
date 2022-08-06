@@ -26,7 +26,7 @@ Maven
 
 or if you want to further customize the module, simply import it.
 
-# Note
+### Note
 If there are any confusions just clone github repository for proper use cases & to get the example app shown in the gifs below.
 
 
@@ -44,8 +44,8 @@ buildscript {
     //...Othercodes
 }
 ```
-## Implementation
-#BannerAds
+# Implementation
+## BannerAds
 ```kotlin
 BannerAds(modifier = Modifier,adUnit = "ca-app-pub-3940256099942544/6300978111", adSize = AdSize.BANNER, adListener = listener)
 ```
