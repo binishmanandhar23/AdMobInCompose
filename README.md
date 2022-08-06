@@ -75,6 +75,8 @@ BannerAds(
     }
 )
 ```
+**Image**
+![](https://i.imgur.com/6wbX6Hs.jpg)
 
 ## Interstitial Ads
 
@@ -161,6 +163,9 @@ NativeAdMediaView(
     scaleType = ImageView.ScaleType.FIT_CENTER
 )
 ```
+**Image**
+![](https://i.imgur.com/87MWyoH.jpg)
+
 
 ## Reward Ads
 
