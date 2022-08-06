@@ -122,11 +122,11 @@ val rememberCustomNativeAdState = rememberCustomNativeAdState(
         }
     }
 )
-val nativeAd by rememberCustomNativeAdState.nativeAd.observeAsState()
+val nativeAd by rememberCustomNativeAdState.nativeAd.observeAsState() //Getting NativeAd object using observe
 if (nativeAd != null)
     NativeAdViewCompose(nativeAd = nativeAd) { nativeAdView ->
-        nativeAdView.setNativeAd(nativeAd)
         /**VERY IMPORTANT**/
+        nativeAdView.setNativeAd(nativeAd)
         //Add your compose codes
     }
 ```
@@ -160,6 +160,45 @@ NativeAdMediaView(
     mediaContent = nativeAd.mediaContent,
     scaleType = ImageView.ScaleType.FIT_CENTER
 )
+```
+
+## Reward Ads
+
+```kotlin
+val rememberCustomRewardAdState =
+    rememberCustomRewardAd(adUnit = "ca-app-pub-3940256099942544/5224354917", onAdFailedToLoad = {
+        //Ad failed to load
+    }, onAdLoaded = {
+        //Ad loaded successfully
+    }, fullScreenContentCallback = object : FullScreenContentCallback() {
+        //Add other full screen callbacks
+        override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+
+        }
+    })
+
+//Add a user action to show Reward ads like on button click
+val coroutineScope = rememberCoroutineScope()
+Button(
+    onClick = {
+        /**First method using coroutine**/
+        coroutineScope.launch {
+            val rewardItem = rememberCustomRewardAdState.showAsync()
+            Log.i(
+                "RewardItem",
+                "Amount: ${rewardItem.amount} Type: ${rewardItem.type}"
+            )
+        }
+        //OR,
+        /**Second method using callbacks**/
+        rememberCustomRewardAdState.show(object : OnUserEarnedRewardListener {
+            override fun onUserEarnedReward(p0: RewardItem) {
+
+            }
+        })
+    }) {
+    //Design button
+}
 ```
 
 ## Contributions
