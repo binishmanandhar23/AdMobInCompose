@@ -80,18 +80,26 @@ class MainActivity : ComponentActivity() {
                         }
                     })
             val rememberCustomNativeAdState = rememberCustomNativeAdState(
-                adUnit = NATIVE_AD_AD_UNIT /*For video need to use set test device configuration*/, nativeAdOptions = NativeAdOptions.Builder()
+                adUnit = NATIVE_AD_AD_UNIT /*For video need to use set test device configuration*/,
+                nativeAdOptions = NativeAdOptions.Builder()
                     .setVideoOptions(
                         VideoOptions.Builder()
                             .setStartMuted(true).setClickToExpandRequested(true)
                             .build()
                     ).setRequestMultipleImages(true)
-                    .build(), adListener = object : AdListener() {
+                    .build(),
+                adListener = object : AdListener() {
                     override fun onAdLoaded() {
                         mainViewModel.updateNativeAdState(AdState(isSuccess = true))
                     }
+
                     override fun onAdFailedToLoad(p0: LoadAdError) {
-                        mainViewModel.updateNativeAdState(nativeAdState = AdState(isError = true, errorMessage = p0.message))
+                        mainViewModel.updateNativeAdState(
+                            nativeAdState = AdState(
+                                isError = true,
+                                errorMessage = p0.message
+                            )
+                        )
                     }
                 }
             )
@@ -279,11 +287,20 @@ class MainActivity : ComponentActivity() {
                             .horizontalScroll(rememberScrollState())
                     ) {
                         nativeAd.mediaContent?.let { mediaContent ->
-                            NativeAdMediaView(modifier = Modifier.fillMaxWidth()) {
+                            NativeAdMediaView(
+                                modifier = Modifier.fillMaxWidth(),
+                                nativeAdView = nativeAdView,
+                                mediaContent = mediaContent,
+                                scaleType = ImageView.ScaleType.FIT_CENTER
+                            )
+                            /**Alternate method**/
+                            /*NativeAdMediaView(
+                                modifier = Modifier.fillMaxWidth()
+                            ){
                                 nativeAdView.mediaView = it
                                 nativeAdView.mediaView?.setImageScaleType(ImageView.ScaleType.FIT_CENTER)
                                 nativeAdView.mediaView?.setMediaContent(mediaContent)
-                            }
+                            }*/
                         }
                     }
                 }

@@ -30,6 +30,7 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
+import com.google.android.gms.ads.MediaContent
 import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
@@ -122,6 +123,14 @@ fun NativeAdImage(
 @Composable
 fun NativeAdMediaView(modifier: Modifier= Modifier, setup: (MediaView) -> Unit) = AndroidView(modifier = modifier, factory = { MediaView(it) }, update = {
     setup(it)
+})
+
+@Composable
+fun NativeAdMediaView(modifier: Modifier= Modifier,nativeAdView: NativeAdView, mediaContent: MediaContent, scaleType: ImageView.ScaleType)
+= AndroidView(modifier = modifier, factory = { MediaView(it) }, update = {
+    nativeAdView.mediaView = it
+    nativeAdView.mediaView?.setMediaContent(mediaContent)
+    nativeAdView.mediaView?.setImageScaleType(scaleType)
 })
 
 @Deprecated("Use 'NativeAdView' for better customization")
