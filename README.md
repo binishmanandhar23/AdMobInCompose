@@ -15,6 +15,18 @@ Gradle
 ```groovy
 implementation 'io.github.binishmanandhar23.admobincompose:admobincompose:1.0.0'
 
+/**Other necessary libraries**/
+//Compose
+implementation "androidx.compose.ui:ui:$compose_version"
+implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+implementation "androidx.activity:activity-compose:$activity_compose_version"
+implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_runtime_version"
+implementation "androidx.compose.material:material:$compose_version"
+//-------------------------//
+
+//Google AdMob
+implementation "com.google.android.gms:play-services-ads:$ads_version"
+/*****************************/
 ```
 
 Maven
@@ -41,7 +53,7 @@ app shown in the gifs below.
 It is important that you follow the
 AdMob's [Get Started documentation](https://developers.google.com/admob/android/quick-start) for
 proper configuration of Mobile Ads SDK On further note, To keep versions consistent of libraries
-with the main application you'll need to add versions in the build.gradle(.) [Project level]
+with the main application you'll need to add versions in the **build.gradle** [**Project level**]
 
 ```groovy
 buildscript {
