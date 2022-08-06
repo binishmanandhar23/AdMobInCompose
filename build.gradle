@@ -5,6 +5,11 @@ buildscript {
         activity_compose_version = '1.5.1'
         lifecycle_runtime_version = '2.5.1'
     }
+    dependencies {
+        classpath "com.github.dcendents:android-maven-gradle-plugin:2.1"
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.15.1' // NEW
+        classpath 'org.jetbrains.dokka:dokka-gradle-plugin:1.4.10.2' // NEW
+    }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     id 'com.android.application' version '7.2.1' apply false
@@ -12,6 +17,13 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
 }
 
+allprojects{
+    plugins.withId("com.vanniktech.maven.publish") {
+        mavenPublish {
+            sonatypeHost = "S01"
+        }
+    }
+}
 
 
 task clean(type: Delete) {
