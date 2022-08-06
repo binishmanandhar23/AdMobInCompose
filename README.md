@@ -3,14 +3,14 @@ AdMob components converted to be used with compose
 
 ![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg)
 
-Making Curves has never been easier.
+Easily add Ads for Android using the power of compose.
 
 # Installation
 
 Add the following dependencies in the gradle file of your app module to get started:
 
 Gradle
-```kotlin
+```groovy
 implementation 'io.github.binishmanandhar23.admobincompose:admobincompose:1.0.0'
 
 ```
@@ -31,7 +31,7 @@ If there are any confusions just clone github repository for proper use cases & 
 
 
 ##Initialization:
-It is important that you follow the AdMob's Get Started [documentation](https://developers.google.com/admob/android/quick-start) for proper configuration of Mobile Ads SDK
+It is important that you follow the AdMob's [Get Started documentation](https://developers.google.com/admob/android/quick-start) for proper configuration of Mobile Ads SDK
 On further note, To keep versions consistent of libraries with the main application you'll need to add versions in the build.gradle(.) [Project level]
 #Example
 ```groovy
