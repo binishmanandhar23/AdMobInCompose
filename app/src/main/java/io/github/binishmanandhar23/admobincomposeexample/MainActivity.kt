@@ -21,10 +21,9 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import io.github.binishmanandhar23.admobincompose.components.BannerAds
@@ -51,7 +50,11 @@ class MainActivity : ComponentActivity() {
                     onAdLoaded = {
                         mainViewModel.updateInterstitialAdState(AdState(isSuccess = true))
                     }, onAdLoadFailed = {
-                        mainViewModel.updateInterstitialAdState(AdState(isError = true, error = it))
+                        mainViewModel.updateInterstitialAdState(AdState(isError = true, errorMessage = it.message))
+                    }, fullScreenContentCallback = object : FullScreenContentCallback() {
+                        override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                            mainViewModel.updateInterstitialAdState(AdState(isError = true, errorMessage = p0.message))
+                        }
                     })
             AdMobInComposeTheme {
                 Surface(
@@ -88,7 +91,7 @@ class MainActivity : ComponentActivity() {
         LoadingBannerAds()
         when {
             bannerAdState.isSuccess -> Text("BannerAd loaded successfully")
-            bannerAdState.isError -> Text("BannerAd load failed: ${bannerAdState.error?.cause}")
+            bannerAdState.isError -> Text("BannerAd load failed: ${bannerAdState.errorMessage}")
         }
     }
 
@@ -105,7 +108,7 @@ class MainActivity : ComponentActivity() {
                 }
 
                 override fun onAdFailedToLoad(p0: LoadAdError) {
-                    mainViewModel.updateBannerAdState(AdState(isError = true, error = p0))
+                    mainViewModel.updateBannerAdState(AdState(isError = true, errorMessage = p0.message))
                 }
             }
         )
@@ -118,25 +121,27 @@ class MainActivity : ComponentActivity() {
         rememberInterstitialAdState: InterstitialAdsState?
     ) {
         val hapticFeedback = LocalHapticFeedback.current
-        Text("Interstitial Ad", style = TextStyle(fontWeight = FontWeight.Bold))
-        AnimatedContent(targetState = interstitialAdState.isSuccess) { success ->
-            if (success)
-                Button(
-                    onClick = {
-                        hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
-                        rememberInterstitialAdState?.show()
-                    },
-                    shape = RoundedCornerShape(40.dp),
-                    elevation = ButtonDefaults.elevation(5.dp)
-                ) {
-                    Text(text = "Show Interstitial ad")
-                }
-            else
-                CircularProgressIndicator()
-        }
-        when {
-            interstitialAdState.isSuccess -> Text("InterstitialAd loaded successfully")
-            interstitialAdState.isError -> Text("InterstitialAd load failed: ${interstitialAdState.error?.cause}")
+        Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text("Interstitial Ad", style = TextStyle(fontWeight = FontWeight.Bold))
+            AnimatedContent(targetState = interstitialAdState.isSuccess) { success ->
+                if (success)
+                    Button(
+                        onClick = {
+                            hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+                            rememberInterstitialAdState?.show()
+                        },
+                        shape = RoundedCornerShape(40.dp),
+                        elevation = ButtonDefaults.elevation(5.dp)
+                    ) {
+                        Text(text = "Show Interstitial ad")
+                    }
+                else
+                    CircularProgressIndicator()
+            }
+            when {
+                interstitialAdState.isSuccess -> Text("InterstitialAd loaded successfully", textAlign = TextAlign.Center)
+                interstitialAdState.isError -> Text("InterstitialAd load failed: ${interstitialAdState.errorMessage}", textAlign = TextAlign.Center)
+            }
         }
     }
 }
