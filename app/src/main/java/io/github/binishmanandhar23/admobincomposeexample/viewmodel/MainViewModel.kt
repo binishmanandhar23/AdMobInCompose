@@ -20,4 +20,10 @@ class MainViewModel: ViewModel() {
     fun updateInterstitialAdState(interstitialAdState: AdState) = viewModelScope.launch {
         _interstitialAdState.update { interstitialAdState }
     }
+
+    private var _nativeAdState = MutableStateFlow(AdState())
+    val nativeAdState = _nativeAdState.asStateFlow()
+    fun updateNativeAdState(nativeAdState: AdState) = viewModelScope.launch {
+        _nativeAdState.update { nativeAdState }
+    }
 }

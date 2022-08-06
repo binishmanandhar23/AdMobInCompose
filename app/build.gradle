@@ -58,6 +58,8 @@ dependencies {
     //Google AdMob
     implementation "com.google.android.gms:play-services-ads:$ads_version"
     //-------------------------//
+    //For using LiveData in JetpackCompose
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
