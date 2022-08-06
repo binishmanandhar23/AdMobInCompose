@@ -26,4 +26,10 @@ class MainViewModel: ViewModel() {
     fun updateNativeAdState(nativeAdState: AdState) = viewModelScope.launch {
         _nativeAdState.update { nativeAdState }
     }
+
+    private var _rewardAdState = MutableStateFlow(AdState())
+    val rewardAdState = _rewardAdState.asStateFlow()
+    fun updateRewardAdState(rewardAdState: AdState) = viewModelScope.launch {
+        _rewardAdState.update { rewardAdState }
+    }
 }

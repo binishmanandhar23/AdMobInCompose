@@ -1,13 +1,13 @@
 package io.github.binishmanandhar23.admobincomposeexample
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -18,10 +18,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.TextStyle
@@ -29,24 +29,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.drawable.toBitmap
 import com.google.android.gms.ads.*
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
 import io.github.binishmanandhar23.admobincompose.components.BannerAds
 import io.github.binishmanandhar23.admobincompose.components.interstitial.InterstitialAdsState
 import io.github.binishmanandhar23.admobincompose.components.interstitial.rememberInterstitialAdsState
 import io.github.binishmanandhar23.admobincompose.components.native.*
+import io.github.binishmanandhar23.admobincompose.components.reward.RewardAdState
+import io.github.binishmanandhar23.admobincompose.components.reward.rememberCustomRewardAd
 import io.github.binishmanandhar23.admobincomposeexample.states.AdState
 import io.github.binishmanandhar23.admobincomposeexample.ui.theme.AdMobInComposeTheme
 import io.github.binishmanandhar23.admobincomposeexample.viewmodel.MainViewModel
+import kotlinx.coroutines.launch
 
 const val BANNER_AD_UNIT = "ca-app-pub-3940256099942544/6300978111"
 const val INTERSTITIAL_AD_UNIT = "ca-app-pub-3940256099942544/1033173712"
 const val NATIVE_AD_AD_UNIT = "ca-app-pub-3940256099942544/2247696110"
 const val NATIVE_AD_AD_UNIT_VIDEO = "ca-app-pub-3940256099942544/1044960115"
+const val REWARD_AD_AD_UNIT = "ca-app-pub-3940256099942544/5224354917"
 
 class MainActivity : ComponentActivity() {
     val mainViewModel by viewModels<MainViewModel>()
@@ -57,6 +58,7 @@ class MainActivity : ComponentActivity() {
             val bannerAdState by mainViewModel.bannerAdState.collectAsState()
             val interstitialAdState by mainViewModel.interstitialAdState.collectAsState()
             val nativeAdState by mainViewModel.nativeAdState.collectAsState()
+            val rewardAdState by mainViewModel.rewardAdState.collectAsState()
             val rememberInterstitialAdState =
                 rememberInterstitialAdsState(
                     adUnit = INTERSTITIAL_AD_UNIT,
@@ -103,6 +105,27 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             )
+            val rememberCustomRewardAdState =
+                rememberCustomRewardAd(adUnit = REWARD_AD_AD_UNIT, onAdFailedToLoad = {
+                    mainViewModel.updateRewardAdState(
+                        AdState(
+                            isError = true,
+                            errorMessage = it.message
+                        )
+                    )
+                }, onAdLoaded = {
+                    mainViewModel.updateRewardAdState(AdState(isSuccess = true))
+                }, fullScreenContentCallback = object : FullScreenContentCallback() {
+                    override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                        mainViewModel.updateRewardAdState(
+                            AdState(
+                                isError = true,
+                                errorMessage = p0.message
+                            )
+                        )
+                    }
+                })
+
             AdMobInComposeTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -125,6 +148,15 @@ class MainActivity : ComponentActivity() {
                         InterstitialAdsSection(
                             interstitialAdState = interstitialAdState,
                             rememberInterstitialAdState = rememberInterstitialAdState
+                        )
+                        Divider(
+                            modifier = Modifier.fillMaxWidth(),
+                            thickness = 1.dp,
+                            color = Color.Black.copy(0.3f)
+                        )
+                        RewardAdsSection(
+                            rewardAdState = rewardAdState,
+                            rememberCustomRewardAdState = rememberCustomRewardAdState
                         )
                         Divider(
                             modifier = Modifier.fillMaxWidth(),
@@ -305,6 +337,45 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
+    }
+
+    @OptIn(ExperimentalAnimationApi::class)
+    @Composable
+    private fun RewardAdsSection(
+        rewardAdState: AdState,
+        rememberCustomRewardAdState: RewardAdState?
+    ) {
+        val hapticFeedback = LocalHapticFeedback.current
+        val coroutineScope = rememberCoroutineScope()
+        rememberCustomRewardAdState?.let {
+            Text("Reward Ad", style = TextStyle(fontWeight = FontWeight.Bold))
+            AnimatedContent(targetState = rewardAdState.isSuccess) { success ->
+                if (success)
+                    Button(
+                        onClick = {
+                            hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+                            coroutineScope.launch {
+                                val rewardItem = rememberCustomRewardAdState.showAsync()
+                                Log.i(
+                                    "RewardItem",
+                                    "Amount: ${rewardItem.amount} Type: ${rewardItem.type}"
+                                )
+                            }
+                        },
+                        shape = RoundedCornerShape(40.dp),
+                        elevation = ButtonDefaults.elevation(5.dp),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary)
+                    ) {
+                        Text(text = "Show Reward ad")
+                    }
+                else
+                    CircularProgressIndicator(color = MaterialTheme.colors.secondary)
+            }
+            when {
+                rewardAdState.isSuccess -> Text("Reward ad loaded successfully")
+                rewardAdState.isError -> Text("Reward Ad load failed: ${rewardAdState.errorMessage}")
+            }
+        }
     }
 }
 
