@@ -13,6 +13,7 @@ Add the following dependencies in the gradle file of your app module to get star
 Gradle
 
 ```groovy
+/**Main library**/
 implementation 'io.github.binishmanandhar23.admobincompose:admobincompose:1.0.0'
 
 /**Other necessary libraries**/
