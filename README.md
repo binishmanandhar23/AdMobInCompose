@@ -44,6 +44,9 @@ buildscript {
     //...Othercodes
 }
 ```
-
-
+## Implementation
+#BannerAds
+```kotlin
+BannerAds(modifier = Modifier,adUnit = "ca-app-pub-3940256099942544/6300978111", adSize = AdSize.BANNER, adListener = listener)
+```
 
