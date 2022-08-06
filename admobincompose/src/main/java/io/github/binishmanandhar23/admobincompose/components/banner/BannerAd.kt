@@ -1,4 +1,4 @@
-package io.github.binishmanandhar23.admobincompose.components
+package io.github.binishmanandhar23.admobincompose.components.banner
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

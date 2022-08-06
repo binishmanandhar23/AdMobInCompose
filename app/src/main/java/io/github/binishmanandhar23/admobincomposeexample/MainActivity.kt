@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
-import io.github.binishmanandhar23.admobincompose.components.BannerAds
+import io.github.binishmanandhar23.admobincompose.components.banner.BannerAds
 import io.github.binishmanandhar23.admobincompose.components.interstitial.InterstitialAdsState
 import io.github.binishmanandhar23.admobincompose.components.interstitial.rememberInterstitialAdsState
 import io.github.binishmanandhar23.admobincompose.components.native.*
