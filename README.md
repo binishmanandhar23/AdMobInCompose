@@ -89,19 +89,83 @@ val rememberInterstitialAdState =
         }, fullScreenContentCallback = object : FullScreenContentCallback() {
             //Add callbacks
             override fun onAdFailedToShowFullScreenContent(p0: AdError) {
-                
+
             }
         })
 //.....Other codes
 rememberInterstitialAdState?.show() // For showing the interstitial ad
 ```
-Calling `show()` is enough for showing the full interstitial ad. 
-**NOTE:** Google limits the number of Interstitial ads that can be shown. 
 
+Calling `show()` is enough for showing the full interstitial ad.
+**NOTE:** Google limits the number of Interstitial ads that can be shown.
+
+## Native Ads
+
+```kotlin
+val nativeAdOptions = NativeAdOptions.Builder()
+    .setVideoOptions(
+        VideoOptions.Builder()
+            .setStartMuted(true).setClickToExpandRequested(true)
+            .build()
+    ).setRequestMultipleImages(true)
+    .build()
+val rememberCustomNativeAdState = rememberCustomNativeAdState(
+    adUnit = "ca-app-pub-3940256099942544/2247696110" /*For video ads we need to setup test device configuration*/,
+    nativeAdOptions = nativeAdOptions /*Optional*/,
+    adListener = object : AdListener() {
+        override fun onAdLoaded() {
+            //Ad has been loaded successfully
+        }
+
+        override fun onAdFailedToLoad(p0: LoadAdError) {
+            //Failed to load ads
+        }
+    }
+)
+val nativeAd by rememberCustomNativeAdState.nativeAd.observeAsState()
+if (nativeAd != null)
+    NativeAdViewCompose(nativeAd = nativeAd) { nativeAdView ->
+        nativeAdView.setNativeAd(nativeAd)
+        /**VERY IMPORTANT**/
+        //Add your compose codes
+    }
+```
+
+### Inner components useful for building NativeAds
+
+```kotlin
+//For Icon
+NativeAdView(getView = {
+    nativeAdView.iconView = it
+}) {
+    /**For images use NativeAdImage**/
+    NativeAdImage(
+        drawable = nativeAd.icon?.drawable,
+        contentDescription = "Icon",
+        modifier = Modifier.fillMaxWidth()
+    )
+}
+//For Headline
+NativeAdView(getView = {
+    nativeAdView.headlineView = it
+}) {
+    //Add your view code in compose
+}
+//......Similarly add codes for body, ratings, price, etc.
+
+//For MediaView
+NativeAdMediaView(
+    modifier = Modifier,
+    nativeAdView = nativeAdView,
+    mediaContent = nativeAd.mediaContent,
+    scaleType = ImageView.ScaleType.FIT_CENTER
+)
+```
 
 ## Contributions
 
 If you want to contribute or just wanna say Hi!, you can find me at:
+
 1. [LinkedIn](https://www.linkedin.com/in/binish-manandhar-3136621b2/)
 2. [Facebook](https://www.facebook.com/binish.manandhar)
 3. [Twitter](https://twitter.com/NotBinish)
