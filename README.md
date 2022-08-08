@@ -14,7 +14,7 @@ Gradle
 
 ```groovy
 /**Main library**/
-implementation 'io.github.binishmanandhar23.admobincompose:admobincompose:1.0.0'
+implementation 'io.github.binishmanandhar23.admobincompose:admobincompose:1.0.1'
 
 /**Other necessary libraries**/
 //Compose
@@ -37,8 +37,8 @@ Maven
 <dependency>
     <groupId>io.github.binishmanandhar23.admobincompose</groupId>
     <artifactId>admobincompose</artifactId>
-    <version>1.0.0</version>
-    <type>aar</type> <!--OR, POM-->
+    <version>1.0.1</version>
+    <type>aar</type>
 </dependency>
 ```
 
