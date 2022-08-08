@@ -53,7 +53,7 @@ app shown in the gifs below.
 
 It is important that you follow the
 AdMob's [Get Started documentation](https://developers.google.com/admob/android/quick-start) for
-proper configuration of Mobile Ads SDK On further note, To keep versions consistent of libraries
+proper configuration of Mobile Ads SDK On further note, To keep libraries' versions consistent
 with the main application you'll need to add versions in the **build.gradle** [**Project level**]
 
 ```groovy
