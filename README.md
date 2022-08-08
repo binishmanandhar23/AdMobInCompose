@@ -38,7 +38,7 @@ Maven
     <groupId>io.github.binishmanandhar23.admobincompose</groupId>
     <artifactId>admobincompose</artifactId>
     <version>1.0.0</version>
-    <type>aar</type>
+    <type>aar</type> <!--OR, POM-->
 </dependency>
 ```
 
