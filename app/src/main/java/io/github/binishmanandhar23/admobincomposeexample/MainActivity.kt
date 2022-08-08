@@ -105,7 +105,6 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             )
-            Log.i("NativeAdCheck","Remember: $rememberCustomNativeAdState")
             val rememberCustomRewardAdState =
                 rememberCustomRewardAd(adUnit = REWARD_AD_AD_UNIT, onAdFailedToLoad = {
                     mainViewModel.updateRewardAdState(
