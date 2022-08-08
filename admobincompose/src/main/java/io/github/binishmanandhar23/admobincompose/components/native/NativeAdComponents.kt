@@ -32,32 +32,24 @@ import coil.request.ImageRequest
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.google.android.gms.ads.MediaContent
 import com.google.android.gms.ads.nativead.MediaView
-import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 
 
 @Composable
 fun NativeAdViewCompose(
     modifier: Modifier = Modifier,
-    nativeAd: NativeAd?,
     content: @Composable (nativeAdView: NativeAdView) -> Unit
-) {
-    if (nativeAd != null)
-        AndroidView(modifier = modifier, factory = {
-            NativeAdView(it).apply {
-                nativeAd.run {
-                    setNativeAd(this)
-                }
-            }
-        }, update = {
-            val composeView = ComposeView(it.context)
-            it.removeAllViews()
-            it.addView(composeView)
-            composeView.setContent {
-                content(it)
-            }
-        })
-}
+) =
+    AndroidView(modifier = modifier, factory = {
+        NativeAdView(it)
+    }, update = {
+        val composeView = ComposeView(it.context)
+        it.removeAllViews()
+        it.addView(composeView)
+        composeView.setContent {
+            content(it)
+        }
+    })
 
 
 @Composable
@@ -121,13 +113,18 @@ fun NativeAdImage(
 )
 
 @Composable
-fun NativeAdMediaView(modifier: Modifier= Modifier, setup: (MediaView) -> Unit) = AndroidView(modifier = modifier, factory = { MediaView(it) }, update = {
-    setup(it)
-})
+fun NativeAdMediaView(modifier: Modifier = Modifier, setup: (MediaView) -> Unit) =
+    AndroidView(modifier = modifier, factory = { MediaView(it) }, update = {
+        setup(it)
+    })
 
 @Composable
-fun NativeAdMediaView(modifier: Modifier= Modifier,nativeAdView: NativeAdView, mediaContent: MediaContent, scaleType: ImageView.ScaleType)
-= AndroidView(modifier = modifier, factory = { MediaView(it) }, update = {
+fun NativeAdMediaView(
+    modifier: Modifier = Modifier,
+    nativeAdView: NativeAdView,
+    mediaContent: MediaContent,
+    scaleType: ImageView.ScaleType
+) = AndroidView(modifier = modifier, factory = { MediaView(it) }, update = {
     nativeAdView.mediaView = it
     nativeAdView.mediaView?.setMediaContent(mediaContent)
     nativeAdView.mediaView?.setImageScaleType(scaleType)
