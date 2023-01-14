@@ -109,8 +109,9 @@ val rememberInterstitialAdState =
         })
 //.....Other codes
 rememberInterstitialAdState?.show() // For showing the interstitial ad
+rememberInterstitialAdState?.refresh(/*adUnit= ....OPTIONAL*/) // To refresh the ad with the same or new adUnit
 ```
-
+**UPDATE:** (Added `remember()` for mitigating multiple load issue.)  
 Calling `show()` is enough for showing the full interstitial ad.
 **NOTE:** Google limits the number of Interstitial ads that can be shown.
 
@@ -218,6 +219,7 @@ Button(
 
             }
         })
+        rememberCustomRewardAdState?.refresh(/*adUnit= ....OPTIONAL*/) // To refresh the ad with the same or new adUnit
     }) {
     //Design button
 }
