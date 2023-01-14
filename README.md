@@ -14,7 +14,7 @@ Gradle
 
 ```groovy
 /**Main library**/
-implementation 'io.github.binishmanandhar23.admobincompose:admobincompose:1.0.0'
+implementation 'io.github.binishmanandhar23.admobincompose:admobincompose:1.0.1'
 
 /**Other necessary libraries**/
 //Compose
@@ -37,7 +37,7 @@ Maven
 <dependency>
     <groupId>io.github.binishmanandhar23.admobincompose</groupId>
     <artifactId>admobincompose</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <type>aar</type>
 </dependency>
 ```
@@ -53,7 +53,7 @@ app shown in the gifs below.
 
 It is important that you follow the
 AdMob's [Get Started documentation](https://developers.google.com/admob/android/quick-start) for
-proper configuration of Mobile Ads SDK On further note, To keep versions consistent of libraries
+proper configuration of Mobile Ads SDK On further note, To keep libraries' versions consistent
 with the main application you'll need to add versions in the **build.gradle** [**Project level**]
 
 ```groovy

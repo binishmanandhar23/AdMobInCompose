@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
-import com.google.android.gms.ads.rewarded.RewardItem
 import io.github.binishmanandhar23.admobincompose.components.banner.BannerAds
 import io.github.binishmanandhar23.admobincompose.components.interstitial.InterstitialAdsState
 import io.github.binishmanandhar23.admobincompose.components.interstitial.rememberInterstitialAdsState
@@ -271,7 +270,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun NativeAdsDesign(nativeAd: NativeAd?) {
         if (nativeAd != null)
-            NativeAdViewCompose(nativeAd = nativeAd) { nativeAdView ->
+            NativeAdViewCompose { nativeAdView ->
                 nativeAdView.setNativeAd(nativeAd)
                 Column(
                     modifier = Modifier.fillMaxWidth(),

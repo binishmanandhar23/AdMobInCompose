@@ -2,6 +2,7 @@ package io.github.binishmanandhar23.admobincompose.components.native
 
 import android.app.Activity
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.ads.*
@@ -14,8 +15,8 @@ fun rememberCustomNativeAdState(
     adUnit: String,
     adListener: AdListener? = null,
     nativeAdOptions: NativeAdOptions? = null
-) =
-    LocalContext.current.getActivity()?.let {
+) = LocalContext.current.getActivity()?.let {
+    remember(adUnit) {
         NativeAdState(
             activity = it,
             adUnit = adUnit,
@@ -23,6 +24,8 @@ fun rememberCustomNativeAdState(
             adOptions = nativeAdOptions
         )
     }
+}
+
 
 class NativeAdState(
     activity: Activity,
