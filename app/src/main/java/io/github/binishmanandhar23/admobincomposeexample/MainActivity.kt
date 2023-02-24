@@ -275,6 +275,7 @@ class MainActivity : ComponentActivity() {
         )
     }
 
+
     @OptIn(ExperimentalAnimationApi::class)
     @Composable
     private fun InterstitialAdsSection(

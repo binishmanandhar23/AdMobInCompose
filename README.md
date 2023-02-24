@@ -14,7 +14,7 @@ Gradle
 
 ```groovy
 /**Main library**/
-implementation 'io.github.binishmanandhar23.admobincompose:admobincompose:1.0.1'
+implementation 'io.github.binishmanandhar23.admobincompose:admobincompose:1.1.0'
 
 /**Other necessary libraries**/
 //Compose
@@ -37,7 +37,7 @@ Maven
 <dependency>
     <groupId>io.github.binishmanandhar23.admobincompose</groupId>
     <artifactId>admobincompose</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
     <type>aar</type>
 </dependency>
 ```
@@ -59,7 +59,7 @@ with the main application you'll need to add versions in the **build.gradle** [*
 ```groovy
 buildscript {
     ext {
-        compose_version = '1.2.0'
+        compose_version = '1.3.1'
         ads_version = '21.1.0'
         activity_compose_version = '1.5.1'
         lifecycle_runtime_version = '2.5.1'
@@ -109,8 +109,9 @@ val rememberInterstitialAdState =
         })
 //.....Other codes
 rememberInterstitialAdState?.show() // For showing the interstitial ad
+rememberInterstitialAdState?.refresh(/*adUnit= ....OPTIONAL*/) // To refresh the ad with the same or new adUnit
 ```
-
+**UPDATE:** (Added `remember()` for mitigating multiple load issue.)  
 Calling `show()` is enough for showing the full interstitial ad.
 **NOTE:** Google limits the number of Interstitial ads that can be shown.
 
@@ -218,6 +219,7 @@ Button(
 
             }
         })
+        rememberCustomRewardAdState?.refresh(/*adUnit= ....OPTIONAL*/) // To refresh the ad with the same or new adUnit
     }) {
     //Design button
 }
