@@ -10,6 +10,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -131,6 +132,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.surface
                 ) {
+                    //LazySection() /*Lazy Column example*/
                     Column(
                         modifier = Modifier
                             .padding(top = 20.dp)
@@ -169,6 +171,72 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 }
+            }
+        }
+    }
+
+    @Composable
+    private fun LazySection(){
+        /*Uses same Native Ad*/
+        /*val nativeAdState by mainViewModel.nativeAdState.collectAsState()
+        val rememberCustomNativeAdState = rememberCustomNativeAdState(
+            adUnit = NATIVE_AD_AD_UNIT *//*For video need to use set test device configuration*//*,
+            nativeAdOptions = NativeAdOptions.Builder()
+                .setVideoOptions(
+                    VideoOptions.Builder()
+                        .setStartMuted(true).setClickToExpandRequested(true)
+                        .build()
+                ).setRequestMultipleImages(true)
+                .build(),
+            adListener = object : AdListener() {
+                override fun onAdLoaded() {
+                    mainViewModel.updateNativeAdState(AdState(isSuccess = true))
+                }
+
+                override fun onAdFailedToLoad(p0: LoadAdError) {
+                    mainViewModel.updateNativeAdState(
+                        nativeAdState = AdState(
+                            isError = true,
+                            errorMessage = p0.message
+                        )
+                    )
+                }
+            }
+        )*/
+        LazyColumn(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally){
+            items(30){
+                /*Creates different Native Ads*/
+                val nativeAdState by mainViewModel.nativeAdState.collectAsState()
+                val rememberCustomNativeAdState = rememberCustomNativeAdState(
+                    adUnit = NATIVE_AD_AD_UNIT, //For video need to use set test device configuration
+                    nativeAdOptions = NativeAdOptions.Builder()
+                        .setVideoOptions(
+                            VideoOptions.Builder()
+                                .setStartMuted(true).setClickToExpandRequested(true)
+                                .build()
+                        ).setRequestMultipleImages(true)
+                        .build(),
+                    adListener = object : AdListener() {
+                        override fun onAdLoaded() {
+                            mainViewModel.updateNativeAdState(AdState(isSuccess = true))
+                        }
+
+                        override fun onAdFailedToLoad(p0: LoadAdError) {
+                            mainViewModel.updateNativeAdState(
+                                nativeAdState = AdState(
+                                    isError = true,
+                                    errorMessage = p0.message
+                                )
+                            )
+                        }
+                    }
+                )
+                if(it % 10 == 0)
+                    NativeAdsSection(nativeAdState = nativeAdState, rememberNativeAdState = rememberCustomNativeAdState)
+                else
+                    Box {
+                        Text(text = "Items", modifier =  Modifier.align(Alignment.Center).fillMaxWidth().padding(20.dp))
+                    }
             }
         }
     }
