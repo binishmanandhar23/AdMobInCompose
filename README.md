@@ -1,6 +1,6 @@
 # AdMobInCompose
 
-AdMob components converted to be used with compose
+Library that helps developers to use AdMob in compose.
 
 ![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg)
 
@@ -235,4 +235,8 @@ If you want to contribute or just wanna say Hi!, you can find me at:
 1. [LinkedIn](https://www.linkedin.com/in/binish-manandhar-3136621b2/)
 2. [Facebook](https://www.facebook.com/binish.manandhar)
 3. [Twitter](https://twitter.com/NotBinish)
+
+
+## Keywords
+#Jetpack #Compose #AdMob #Ads #Android #Library
 
