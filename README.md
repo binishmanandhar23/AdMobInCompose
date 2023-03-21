@@ -1,10 +1,10 @@
 # AdMobInCompose
 
-Library that helps developers to use AdMob in compose.
+Library that help developers to use AdMob in compose.
 
 ![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg)
 
-Easily add Ads for Android using the power of compose.
+Easily add Ads in Android using the power of compose.
 
 # Installation
 
@@ -111,7 +111,7 @@ val rememberInterstitialAdState =
 rememberInterstitialAdState?.show() // For showing the interstitial ad
 rememberInterstitialAdState?.refresh(/*adUnit= ....OPTIONAL*/) // To refresh the ad with the same or new adUnit
 ```
-**UPDATE:** (Added `remember()` for mitigating multiple load issue.)  
+**UPDATE:** (Add `remember()` for mitigating multiple load issue.)  
 Calling `show()` is enough for showing the full interstitial ad.
 **NOTE:** Google limits the number of Interstitial ads that can be shown.
 
